@@ -1,0 +1,124 @@
+import itertools
+
+matriz = [
+    #A B C D E
+    [0,1,1,0,0],    #A                  [A]
+    [0,0,0,1,1],    #B                 /   \
+    [0,0,0,0,1],    #C              [B]     [C]
+    [0,0,0,0,0],    #D             /   \
+    [0,0,0,0,0]     #E          [D]     [E]
+]
+
+#Genera la tabla de verdad para la relacion de nodos y coloca los solicitados por el usuario. Se ingresa BC, devuelve BC, B-C, -BC, -B-C
+def generateTableNodes(letters):
+    boleanos = []
+    structure = []
+    res = []
+
+    for l in letters:
+        boleanos.append([True, False])
+
+    for element in itertools.product(*boleanos):
+        structure.append(element)
+
+    for x in structure:
+        change = 0
+        newStructure = ""
+        for t in x:
+            if t == True:
+                newStructure+= letters[change]
+            else:
+                newStructure+= "-"+letters[change]
+            change+=1
+        res.append(newStructure)
+    return res
+
+#Genera la red bayesiana
+def createBayesianNetwork(matrix):
+    letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    red = {}
+    negred = {}
+    baynet = {}
+
+    for x in range(len(matrix)):
+        val = ''
+        count = 0
+        for y in matrix:
+            if y[len(matrix) - x - 1] == 1:
+                val = val + letters[count] 
+            count+=1
+        red['{}'.format(letters[len(matrix) - x - 1])]= {val:0}
+
+    for j in red.keys():
+        firstKey = list(red.get(j).keys())[0]
+        if firstKey != '':
+            tableNodes = generateTableNodes(firstKey)
+        else:
+            red[j] = 0
+            continue
+        for node in tableNodes:
+            red[j].update({node: 0})
+    
+    for node in red.keys():
+        negred["-"+node] = red.get(node)
+
+    baynet['Pos'] = red
+    baynet['Neg'] = negred
+    return baynet
+
+#Genera la representación compacta de la red bayesiana
+def getCompactRepresentation(bayesianNetwork):
+    bayesianNetwork = bayesianNetwork['Pos']
+    listados = list(bayesianNetwork.keys())
+    res = []
+    compact = ""
+    for l in listados:
+        if type(bayesianNetwork.get(l)) == dict:
+            val = list(bayesianNetwork.get(l))[0]
+            res.append('P('+l + '|' + val+')')
+        else:
+            res.append('P('+l+')')
+    for p in res:
+        compact+=p + ' '
+    return compact
+
+#Función para ingresar probabilidad de un nodo específico
+def insertProbability(bayesianNetwork, inf, prob):
+    pos = bayesianNetwork['Pos']
+    neg = bayesianNetwork['Neg']
+    res = {}
+
+    try:
+        if len(inf) !=1:
+            letters = list(inf.partition('|'))
+            letters.remove('|')
+            if letters[1] in pos.get(letters[0]):
+                pos[letters[0]] = ({letters[1]: prob})
+                res['Pos'] = pos
+                neg["-"+letters[0]] = ({letters[1]: 1-prob})
+                res['Neg'] = neg
+            else:
+                print('No se encuentra la relacion dada')
+                res = bayesianNetwork
+        else:
+            if inf in pos:
+                pos[inf] = (prob)
+                res['Pos'] = pos
+                neg["-"+inf] = (1-prob)
+                res['Neg'] = neg
+            else:
+                print('No se encuentra la relacion dada')
+                res = bayesianNetwork
+    except:
+        print('No se encuentra la relacion dada')
+        res = bayesianNetwork
+
+    return res
+
+
+BayesianNetwork = createBayesianNetwork(matriz)
+print("Forma compacta:\n",getCompactRepresentation(BayesianNetwork), "\n")
+
+BayesianNetwork = insertProbability(BayesianNetwork, 'E|BC',0.15)
+BayesianNetwork = insertProbability(BayesianNetwork, 'A',0.24)
+print(BayesianNetwork)
