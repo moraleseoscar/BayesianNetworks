@@ -133,7 +133,7 @@ class BNetwork:
             faltantes = "\nLa red se encuentra completamente descrita\n"
         return faltantes
     
-    def test():
+    def test(self):
         return "Hola mundo"
     
     def __str__(self): 
@@ -149,7 +149,8 @@ matriz = [
     [0,0,0,0,0]     #E          [D]     [E]
 ]
 
-# BayesianNetwork = BNetwork()
+BayesianNetwork = BNetwork()
+print(BayesianNetwork.test())
 # BayesianNetwork.createBNetwork(matriz)
 
 # BayesianNetwork.insertProbability('A',0.24)     #A

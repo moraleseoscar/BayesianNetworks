@@ -1,6 +1,5 @@
-from bayesianNetwork import BNetwork
+from OBNetwork import *
 
-BNet = BNetwork
+bnet = BNetwork()
 
-
-print(BNet.test())
+bnet.test()
