@@ -119,7 +119,7 @@ class BNetwork:
     #Función para verificar que la Red se encuentre correctamente descrita (Valores distintos de 0)
     def descriptionCheck(self):
         pos = self.bnet.get('Pos')
-        faltantes = "\nProbabilidades faltantes de ingresar:\n"
+        faltantes = ""
     
         for k in pos.keys():
             if type(pos.get(k)) == dict:
@@ -127,7 +127,14 @@ class BNetwork:
                     if pos[k][kk] == 0:
                         faltantes+=(k + '|' + kk + '\n')                
 
+        if faltantes != "":
+            faltantes = "\nProbabilidades faltantes de ingresar:\n" + faltantes
+        else:
+            faltantes = "\nLa red se encuentra completamente descrita\n"
         return faltantes
+    
+    def test():
+        return "Hola mundo"
     
     def __str__(self): 
         return "\nMatriz:\n" + str(self.bnet) + "\n"
@@ -142,24 +149,24 @@ matriz = [
     [0,0,0,0,0]     #E          [D]     [E]
 ]
 
-BayesianNetwork = BNetwork()
-BayesianNetwork.createBNetwork(matriz)
+# BayesianNetwork = BNetwork()
+# BayesianNetwork.createBNetwork(matriz)
 
-BayesianNetwork.insertProbability('A',0.24)     #A
-BayesianNetwork.insertProbability('B|A',0.15)   #B
-BayesianNetwork.insertProbability('B|-A',0.19)
-BayesianNetwork.insertProbability('C|A',0.24)   #C
-BayesianNetwork.insertProbability('C|-A',0.31)
-BayesianNetwork.insertProbability('D|B',0.12)   #D
-BayesianNetwork.insertProbability('D|-B',0.25)
-BayesianNetwork.insertProbability('E|BC',0.12)  #E
+# BayesianNetwork.insertProbability('A',0.24)     #A
+# BayesianNetwork.insertProbability('B|A',0.15)   #B
+# BayesianNetwork.insertProbability('B|-A',0.19)
+# BayesianNetwork.insertProbability('C|A',0.24)   #C
+# BayesianNetwork.insertProbability('C|-A',0.31)
+# BayesianNetwork.insertProbability('D|B',0.12)   #D
+# BayesianNetwork.insertProbability('D|-B',0.25)
+# BayesianNetwork.insertProbability('E|BC',0.12)  #E
 # BayesianNetwork.insertProbability('E|B-C',0.08)
 # BayesianNetwork.insertProbability('E|-BC',0.31)
-BayesianNetwork.insertProbability('E|-B-C',0.14)
+# BayesianNetwork.insertProbability('E|-B-C',0.14)
 
-print(BayesianNetwork.descriptionCheck())
-print(BayesianNetwork.showCompactRepresentation())
-print(BayesianNetwork)
+# print(BayesianNetwork.descriptionCheck())
+# print(BayesianNetwork.showCompactRepresentation())
+# print(BayesianNetwork)
 
 
 
