@@ -138,36 +138,3 @@ class BNetwork:
     
     def __str__(self): 
         return "\nMatriz:\n" + str(self.bnet) + "\n"
-
-
-matriz = [
-    #A B C D E
-    [0,1,1,0,0],    #A                  [A]
-    [0,0,0,1,1],    #B                 /   \
-    [0,0,0,0,1],    #C              [B]     [C]
-    [0,0,0,0,0],    #D             /   \
-    [0,0,0,0,0]     #E          [D]     [E]
-]
-
-BayesianNetwork = BNetwork()
-print(BayesianNetwork.test())
-# BayesianNetwork.createBNetwork(matriz)
-
-# BayesianNetwork.insertProbability('A',0.24)     #A
-# BayesianNetwork.insertProbability('B|A',0.15)   #B
-# BayesianNetwork.insertProbability('B|-A',0.19)
-# BayesianNetwork.insertProbability('C|A',0.24)   #C
-# BayesianNetwork.insertProbability('C|-A',0.31)
-# BayesianNetwork.insertProbability('D|B',0.12)   #D
-# BayesianNetwork.insertProbability('D|-B',0.25)
-# BayesianNetwork.insertProbability('E|BC',0.12)  #E
-# BayesianNetwork.insertProbability('E|B-C',0.08)
-# BayesianNetwork.insertProbability('E|-BC',0.31)
-# BayesianNetwork.insertProbability('E|-B-C',0.14)
-
-# print(BayesianNetwork.descriptionCheck())
-# print(BayesianNetwork.showCompactRepresentation())
-# print(BayesianNetwork)
-
-
-
