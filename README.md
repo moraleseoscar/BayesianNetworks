@@ -28,13 +28,13 @@ matrix = [
 ]
 ```
 
-Within the library we can generate our matrix, from which we can see that it is returned as a dictionary. To create a new bayesian network use the method createBNetwork(matrix)
+Within the library we can generate our matrix, from which we can see that it is returned as a dictionary. To create a new bayesian network use the method `createBNetwork(matrix)`
 ```python
 BayesianNetwork.createBNetwork(matrix)
 print(BayesianNetwork)
 ```
 
-To insert a new probability into our BayesianNetwork, use the method inserProbability()
+To insert a new probability into our BayesianNetwork, use the method `inserProbability(dependency, prob)`
 ```python
 BayesianNetwork.insertProbability('A',0.24)     #A
 BayesianNetwork.insertProbability('B|A',0.15)   #B
@@ -49,12 +49,12 @@ BayesianNetwork.insertProbability('E|-BC',0.31)
 BayesianNetwork.insertProbability('E|-B-C',0.14)
 ```
 
-To verify if a probability is required, use the method descriptionCheck()
+To verify if a probability is required, use the method `descriptionCheck()`
 ```python
 print(BayesianNetwork.descriptionCheck())
 ```
 
-And if you want to see the bayesian network compact representation, just use showCompactRepresentation()
+And if you want to see the bayesian network compact representation, just use `showCompactRepresentation()`
 ```python
 print(BayesianNetwork.showCompactRepresentation())
 ```
